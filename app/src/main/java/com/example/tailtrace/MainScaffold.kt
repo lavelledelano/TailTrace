@@ -65,6 +65,8 @@ fun MainScaffold(vm: AppViewModel) {
             composable("map") { Placeholder("Map (coming soon)") }
             composable("cases") { CasesScreen(vm, nav) }
             composable("create") { CreateCaseScreen(vm, nav) }
+            composable("detail/{id}") { DetailScreen(vm, nav, it.arguments!!.getString("id")!!) }
+            composable("sighting/{id}") { SightingScreen(vm, nav, it.arguments!!.getString("id")!!) }
             composable("settings") {
                 Placeholder("Settings (coming soon)") {
                     Button(onClick = { vm.logout() }) { Text("Log out") }
