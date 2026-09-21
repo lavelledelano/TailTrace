@@ -42,21 +42,9 @@ fun TailTraceApp(vm: AppViewModel = viewModel()) {
                     onLogin = { email, password -> vm.login(email, password) },
                     onRegister = { name, email, password, phone -> vm.register(name, email, password, phone) },
                 )
-                else -> HomePlaceholder(s.name) { vm.logout() }
+                else -> MainScaffold(vm)
             }
         }
     }
 }
 
-@Composable
-fun HomePlaceholder(name: String, onLogout: () -> Unit) {
-    Column(
-        Modifier.fillMaxSize().padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text("Welcome, " + name, style = MaterialTheme.typography.titleLarge)
-        Text("You are signed in.")
-        Button(onClick = onLogout) { Text("Log out") }
-    }
-}

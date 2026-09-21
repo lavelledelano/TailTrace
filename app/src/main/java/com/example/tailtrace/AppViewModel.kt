@@ -53,4 +53,46 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun logout() {
         viewModelScope.launch { prefs.clearSession() }
     }
+    // ---- location and pets ----
+    var lat by mutableStateOf(DEFAULT_LAT)
+        private set
+    var lng by mutableStateOf(DEFAULT_LNG)
+        private set
+    var pets by mutableStateOf<List<Pet>>(emptyList())
+        private set
+    var selected by mutableStateOf<Pet?>(null)
+        private set
+    var sightings by mutableStateOf<List<Sighting>>(emptyList())
+        private set
+
+    fun setLocation(la: Double, ln: Double) {
+        lat = la
+        lng = ln
+    }
+
+    fun loadNearby() = launchApi {
+        pets = api.nearby(lat, lng, settings.value?.radius ?: 10)
+    }
+
+    fun loadPet(id: String) = launchApi {
+        selected = null
+        sightings = emptyList()
+        selected = api.pet(id)
+        sightings = api.sightings(id)
+    }
+
+    fun createPet(body: NewPet, done: () -> Unit) = launchApi {
+        api.createPet(body)
+        done()
+    }
+
+    fun addSighting(body: NewSighting, done: () -> Unit) = launchApi {
+        api.addSighting(body)
+        done()
+    }
+
+    fun setStatus(id: String, status: String) = launchApi {
+        selected = api.setStatus(id, StatusRequest(status))
+        pets = api.nearby(lat, lng, settings.value?.radius ?: 10)
+    }
 }

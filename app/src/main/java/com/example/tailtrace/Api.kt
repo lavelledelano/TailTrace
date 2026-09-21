@@ -5,14 +5,23 @@ import org.json.JSONObject
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
+import retrofit2.http.*
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 interface TailTraceApi {
     @POST("api/auth/register") suspend fun register(@Body body: RegisterRequest): AuthResponse
     @POST("api/auth/login") suspend fun login(@Body body: LoginRequest): AuthResponse
+
+    @GET("api/pets/nearby")
+    suspend fun nearby(@Query("lat") lat: Double, @Query("lng") lng: Double, @Query("radiusKm") radiusKm: Int): List<Pet>
+    @GET("api/pets/{id}") suspend fun pet(@Path("id") id: String): Pet
+    @POST("api/pets") suspend fun createPet(@Body body: NewPet): Pet
+    @PATCH("api/pets/{id}/status") suspend fun setStatus(@Path("id") id: String, @Body body: StatusRequest): Pet
+
+    @GET("api/pets/{id}/sightings") suspend fun sightings(@Path("id") id: String): List<Sighting>
+    @POST("api/sightings") suspend fun addSighting(@Body body: NewSighting): Sighting
 }
 
 object ApiClient {

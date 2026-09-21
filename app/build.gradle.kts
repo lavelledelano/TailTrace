@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.tailtrace"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -58,4 +58,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.2")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("androidx.navigation:navigation-compose:2.8.9")
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }
