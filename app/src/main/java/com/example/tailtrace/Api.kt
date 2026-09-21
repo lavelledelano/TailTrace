@@ -14,6 +14,8 @@ interface TailTraceApi {
     @POST("api/auth/register") suspend fun register(@Body body: RegisterRequest): AuthResponse
     @POST("api/auth/login") suspend fun login(@Body body: LoginRequest): AuthResponse
 
+    @PUT("api/users/me") suspend fun updateProfile(@Body body: ProfileUpdate): User
+
     @GET("api/pets/nearby")
     suspend fun nearby(@Query("lat") lat: Double, @Query("lng") lng: Double, @Query("radiusKm") radiusKm: Int): List<Pet>
     @GET("api/pets/{id}") suspend fun pet(@Path("id") id: String): Pet

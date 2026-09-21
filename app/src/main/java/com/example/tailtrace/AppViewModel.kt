@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import androidx.datastore.preferences.core.Preferences
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val prefs = Prefs(app)
@@ -94,5 +95,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun setStatus(id: String, status: String) = launchApi {
         selected = api.setStatus(id, StatusRequest(status))
         pets = api.nearby(lat, lng, settings.value?.radius ?: 10)
+    }
+    // ---- settings ----
+    fun updateProfile(name: String, phone: String, done: () -> Unit) = launchApi {
+        val u = api.updateProfile(ProfileUpdate(name, phone))
+        prefs.saveProfile(u)
+        done()
+    }
+
+    fun <T> setPref(key: Preferences.Key<T>, value: T) {
+        viewModelScope.launch { prefs.set(key, value) }
     }
 }

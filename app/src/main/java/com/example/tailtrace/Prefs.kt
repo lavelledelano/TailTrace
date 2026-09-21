@@ -50,6 +50,12 @@ class Prefs(private val ctx: Context) {
         }
     }
 
+    suspend fun saveProfile(u: User) {
+        ctx.store.edit {
+            it[NAME] = u.fullName
+            it[PHONE] = u.phone ?: ""
+        }
+    }
     suspend fun clearSession() {
         ctx.store.edit {
             it.remove(TOKEN)

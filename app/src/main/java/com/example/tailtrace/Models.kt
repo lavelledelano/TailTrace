@@ -39,3 +39,4 @@ data class NewSighting(
     val petId: String, val lat: Double, val lng: Double,
     val direction: String, val notes: String, val photoBase64: String?,
 )
+data class ProfileUpdate(val fullName: String, val phone: String)
