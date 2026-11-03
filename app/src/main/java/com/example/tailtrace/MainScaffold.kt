@@ -27,7 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-
+import androidx.compose.ui.res.stringResource
 @Composable
 fun MainScaffold(vm: AppViewModel) {
     val nav = rememberNavController()
@@ -39,9 +39,9 @@ fun MainScaffold(vm: AppViewModel) {
     LaunchedEffect(vm.lat, vm.lng, settings?.radius) { vm.loadNearby() }
 
     val tabs = listOf(
-        Triple("map", "Map", Icons.Default.Map),
-        Triple("cases", "Cases", Icons.Default.Pets),
-        Triple("settings", "Settings", Icons.Default.Settings),
+        Triple("map", stringResource(R.string.nav_map), Icons.Default.Map),
+        Triple("cases", stringResource(R.string.nav_cases), Icons.Default.Pets),
+        Triple("settings", stringResource(R.string.nav_settings), Icons.Default.Settings),
     )
 
     Scaffold(

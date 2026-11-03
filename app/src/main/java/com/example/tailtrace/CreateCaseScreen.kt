@@ -1,15 +1,7 @@
 package com.example.tailtrace
 
 import android.graphics.Bitmap
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -19,6 +11,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import java.time.Instant
@@ -26,6 +20,7 @@ import java.time.Instant
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateCaseScreen(vm: AppViewModel, nav: NavController) {
+    val ctx = LocalContext.current
     var name by remember { mutableStateOf("") }
     var species by remember { mutableStateOf("Dog") }
     var breed by remember { mutableStateOf("") }
@@ -41,46 +36,50 @@ fun CreateCaseScreen(vm: AppViewModel, nav: NavController) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { nav.popBackStack() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
             }
-            Text("Report a missing pet", style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(R.string.create_title), style = MaterialTheme.typography.titleLarge)
         }
 
         PhotoPicker(photo) { photo = it }
 
         OutlinedTextField(
-            name, { name = it }, label = { Text("Pet name") }, singleLine = true,
+            name, { name = it }, label = { Text(stringResource(R.string.create_name)) }, singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             listOf("Dog", "Cat", "Other").forEach {
-                FilterChip(selected = species == it, onClick = { species = it }, label = { Text(it) })
+                FilterChip(
+                    selected = species == it,
+                    onClick = { species = it },
+                    label = { Text(speciesLabel(ctx, it)) },
+                )
             }
         }
         OutlinedTextField(
-            breed, { breed = it }, label = { Text("Breed or appearance") }, singleLine = true,
+            breed, { breed = it }, label = { Text(stringResource(R.string.create_breed)) }, singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )
         OutlinedTextField(
-            color, { color = it }, label = { Text("Colour and markings") }, singleLine = true,
+            color, { color = it }, label = { Text(stringResource(R.string.create_color)) }, singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )
         OutlinedTextField(
             description, { description = it },
-            label = { Text("Collar, tags, personality, anything that helps") },
+            label = { Text(stringResource(R.string.create_desc)) },
             minLines = 3, modifier = Modifier.fillMaxWidth(),
         )
 
         Card(Modifier.fillMaxWidth()) {
             Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text("Last seen location", style = MaterialTheme.typography.titleMedium)
-                    Text("%.4f, %.4f (your current location)".format(vm.lat, vm.lng))
+                    Text(stringResource(R.string.create_location), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.create_location_sub, "%.4f, %.4f".format(vm.lat, vm.lng)))
                 }
                 TextButton(onClick = { requestLocation() }) {
                     Icon(Icons.Default.MyLocation, null)
                     Spacer(Modifier.width(4.dp))
-                    Text("Update")
+                    Text(stringResource(R.string.create_update))
                 }
             }
         }
@@ -91,8 +90,8 @@ fun CreateCaseScreen(vm: AppViewModel, nav: NavController) {
             onClick = {
                 val bmp = photo
                 formError = when {
-                    bmp == null -> "Please add a photo so people can recognise your pet"
-                    name.isBlank() || breed.isBlank() || color.isBlank() -> "Name, breed and colour are required"
+                    bmp == null -> ctx.getString(R.string.err_photo)
+                    name.isBlank() || breed.isBlank() || color.isBlank() -> ctx.getString(R.string.err_required)
                     else -> null
                 }
                 if (formError == null && bmp != null) {
@@ -110,7 +109,7 @@ fun CreateCaseScreen(vm: AppViewModel, nav: NavController) {
             enabled = !vm.loading,
             modifier = Modifier.fillMaxWidth().height(52.dp),
         ) {
-            Text(if (vm.loading) "Posting..." else "Post missing pet")
+            Text(stringResource(if (vm.loading) R.string.create_posting else R.string.create_post))
         }
     }
 }

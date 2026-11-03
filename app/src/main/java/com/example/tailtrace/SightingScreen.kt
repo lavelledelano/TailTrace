@@ -13,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
@@ -24,6 +25,7 @@ fun SightingScreen(vm: AppViewModel, nav: NavController, petId: String) {
     var photo by remember { mutableStateOf<Bitmap?>(null) }
     val requestLocation = rememberLocationRequester { la, ln -> vm.setLocation(la, ln) }
     val directions = listOf("N", "NE", "E", "SE", "S", "SW", "W", "NW", "Unknown")
+    val petName = vm.selected?.petName ?: stringResource(R.string.sight_this_pet)
 
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -31,42 +33,43 @@ fun SightingScreen(vm: AppViewModel, nav: NavController, petId: String) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { nav.popBackStack() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
             }
             Column {
-                Text("Report a sighting", style = MaterialTheme.typography.titleLarge)
-                Text(
-                    "Help " + (vm.selected?.petName ?: "this pet") + " get home safely",
-                    color = MaterialTheme.colorScheme.primary,
-                )
+                Text(stringResource(R.string.sight_title), style = MaterialTheme.typography.titleLarge)
+                Text(stringResource(R.string.sight_help, petName), color = MaterialTheme.colorScheme.primary)
             }
         }
 
-        Text("Add a photo (optional)", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.sight_photo), style = MaterialTheme.typography.titleMedium)
         PhotoPicker(photo) { photo = it }
 
-        Text("Sighting location", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.sight_location), style = MaterialTheme.typography.titleMedium)
         Card(Modifier.fillMaxWidth()) {
             Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text("%.4f, %.4f".format(vm.lat, vm.lng), Modifier.weight(1f))
                 TextButton(onClick = { requestLocation() }) {
                     Icon(Icons.Default.MyLocation, null)
                     Spacer(Modifier.width(4.dp))
-                    Text("Use current location")
+                    Text(stringResource(R.string.sight_use_location))
                 }
             }
         }
 
-        Text("Direction it was heading", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.sight_direction), style = MaterialTheme.typography.titleMedium)
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             directions.forEach {
-                FilterChip(selected = direction == it, onClick = { direction = it }, label = { Text(it) })
+                FilterChip(
+                    selected = direction == it,
+                    onClick = { direction = it },
+                    label = { Text(if (it == "Unknown") stringResource(R.string.sight_unknown) else it) },
+                )
             }
         }
 
         OutlinedTextField(
             notes, { if (it.length <= 200) notes = it },
-            label = { Text("What did you notice?") },
+            label = { Text(stringResource(R.string.sight_notice)) },
             supportingText = { Text(notes.length.toString() + "/200") },
             minLines = 3, modifier = Modifier.fillMaxWidth(),
         )
@@ -78,7 +81,7 @@ fun SightingScreen(vm: AppViewModel, nav: NavController, petId: String) {
             Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.Shield, null, tint = MaterialTheme.colorScheme.secondary)
                 Spacer(Modifier.width(10.dp))
-                Text("Please observe from a safe distance. Don't chase or corner the animal. Keep yourself and the pet safe.")
+                Text(stringResource(R.string.sight_safety))
             }
         }
 
@@ -97,7 +100,7 @@ fun SightingScreen(vm: AppViewModel, nav: NavController, petId: String) {
             modifier = Modifier.fillMaxWidth().height(52.dp),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
         ) {
-            Text(if (vm.loading) "Sharing..." else "Share sighting")
+            Text(stringResource(if (vm.loading) R.string.sight_sharing else R.string.sight_share))
         }
     }
 }

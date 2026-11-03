@@ -21,28 +21,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tailtrace.ui.theme.TailTraceTheme
-
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val prefs = getSharedPreferences("crash", MODE_PRIVATE)
+        Thread.setDefaultUncaughtExceptionHandler { _, e ->
+            prefs.edit().putString("trace", e.stackTraceToString()).commit()
+            android.os.Process.killProcess(android.os.Process.myPid())
+            kotlin.system.exitProcess(10)
+        }
+        val trace = prefs.getString("trace", null)
+        if (trace != null) {
+            prefs.edit().remove("trace").apply()
+            setContent {
+                Text(
+                    trace.take(2500),
+                    modifier = Modifier.verticalScroll(rememberScrollState()).padding(16.dp),
+                )
+            }
+            return
+        }
         setContent { TailTraceApp() }
     }
 }
 
+
 @Composable
 fun TailTraceApp(vm: AppViewModel = viewModel()) {
     val s = vm.settings.collectAsState().value
-    TailTraceTheme(dark = s?.dark ?: false) {
-        Surface(Modifier.fillMaxSize().systemBarsPadding(), color = MaterialTheme.colorScheme.background) {
-            when {
-                s == null -> Box(Modifier.fillMaxSize(), Alignment.Center) { CircularProgressIndicator() }
-                s.token == null -> AuthScreen(
-                    loading = vm.loading,
-                    serverError = vm.error,
-                    onLogin = { email, password -> vm.login(email, password) },
-                    onRegister = { name, email, password, phone -> vm.register(name, email, password, phone) },
-                )
-                else -> MainScaffold(vm)
+    LocalizedApp(s?.lang ?: "en") {
+        TailTraceTheme(dark = s?.dark ?: false) {
+            Surface(Modifier.fillMaxSize().systemBarsPadding(), color = MaterialTheme.colorScheme.background) {
+                when {
+                    s == null -> Box(Modifier.fillMaxSize(), Alignment.Center) { CircularProgressIndicator() }
+                    s.token == null -> AuthScreen(
+                        loading = vm.loading,
+                        serverError = vm.error,
+                        onLogin = { email, password -> vm.login(email, password) },
+                        onRegister = { name, email, password, phone -> vm.register(name, email, password, phone) },
+                    )
+                    else -> MainScaffold(vm)
+                }
             }
         }
     }

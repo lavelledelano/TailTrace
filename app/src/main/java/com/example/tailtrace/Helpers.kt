@@ -39,6 +39,8 @@ import java.io.ByteArrayOutputStream
 import java.time.Duration
 import java.time.Instant
 
+import androidx.compose.ui.res.stringResource
+
 const val DEFAULT_LAT = -26.2041   // Johannesburg, used if location is denied
 const val DEFAULT_LNG = 28.0473
 
@@ -105,7 +107,7 @@ fun PhotoPicker(bitmap: Bitmap?, onPicked: (Bitmap) -> Unit) {
             OutlinedButton(onClick = { camera.launch(null) }, modifier = Modifier.weight(1f)) {
                 Icon(Icons.Default.PhotoCamera, null)
                 Spacer(Modifier.width(6.dp))
-                Text("Take photo")
+                Text(stringResource(R.string.photo_take))
             }
             OutlinedButton(
                 onClick = { gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
@@ -113,7 +115,7 @@ fun PhotoPicker(bitmap: Bitmap?, onPicked: (Bitmap) -> Unit) {
             ) {
                 Icon(Icons.Default.PhotoLibrary, null)
                 Spacer(Modifier.width(6.dp))
-                Text("Library")
+                Text(stringResource(R.string.photo_library))
             }
         }
     }

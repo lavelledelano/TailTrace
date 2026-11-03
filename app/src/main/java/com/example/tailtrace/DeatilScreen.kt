@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -34,10 +35,13 @@ fun DetailScreen(vm: AppViewModel, nav: NavController, id: String) {
 
     if (pet == null) {
         Box(Modifier.fillMaxSize(), Alignment.Center) {
-            if (vm.loading) CircularProgressIndicator() else Text(vm.error ?: "Case not found")
+            if (vm.loading) CircularProgressIndicator()
+            else Text(vm.error ?: stringResource(R.string.detail_not_found))
         }
         return
     }
+
+    val ownerLabel = pet.ownerName ?: stringResource(R.string.detail_owner)
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
         Box {
@@ -46,17 +50,17 @@ fun DetailScreen(vm: AppViewModel, nav: NavController, id: String) {
                 modifier = Modifier.fillMaxWidth().height(280.dp), contentScale = ContentScale.Crop,
             )
             IconButton(onClick = { nav.popBackStack() }, Modifier.padding(8.dp)) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back), tint = Color.White)
             }
         }
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(pet.petName, style = MaterialTheme.typography.headlineLarge)
             Text(
-                "Status: " + pet.status.lowercase().replaceFirstChar { it.uppercase() },
+                stringResource(R.string.status_label, statusLabel(ctx, pet.status)),
                 color = MaterialTheme.colorScheme.secondary,
             )
-            Text(pet.species + " • " + pet.breed + " • " + pet.color)
-            Text("Last seen " + timeAgo(pet.lastSeenAt))
+            Text(speciesLabel(ctx, pet.species) + " • " + pet.breed + " • " + pet.color)
+            Text(stringResource(R.string.last_seen, timeAgoL(ctx, pet.lastSeenAt)))
             if (!pet.description.isNullOrBlank()) Text(pet.description)
 
             Button(
@@ -66,7 +70,7 @@ fun DetailScreen(vm: AppViewModel, nav: NavController, id: String) {
             ) {
                 Icon(Icons.Default.Visibility, null)
                 Spacer(Modifier.width(8.dp))
-                Text("I saw this pet")
+                Text(stringResource(R.string.detail_saw))
             }
             if (!pet.ownerPhone.isNullOrBlank()) {
                 OutlinedButton(
@@ -75,39 +79,45 @@ fun DetailScreen(vm: AppViewModel, nav: NavController, id: String) {
                 ) {
                     Icon(Icons.Default.Call, null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Call " + (pet.ownerName ?: "owner"))
+                    Text(stringResource(R.string.detail_call, ownerLabel))
                 }
             }
 
             if (pet.ownerId == me) {
-                Text("Update case status", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.detail_update_status), style = MaterialTheme.typography.titleMedium)
                 Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf("ACTIVE", "PAUSED", "REUNITED", "CLOSED").forEach { s ->
                         FilterChip(
                             selected = pet.status == s,
                             onClick = { vm.setStatus(pet.id, s) },
-                            label = { Text(s.lowercase().replaceFirstChar { it.uppercase() }) },
+                            label = { Text(statusLabel(ctx, s)) },
                         )
                     }
                 }
             }
 
-            Text("Sightings (" + vm.sightings.size + ")", style = MaterialTheme.typography.titleMedium)
-            if (vm.sightings.isEmpty()) Text("No sightings yet.")
+            Text(
+                stringResource(R.string.detail_sightings, vm.sightings.size),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            if (vm.sightings.isEmpty()) Text(stringResource(R.string.detail_none))
             vm.sightings.forEach { s ->
                 Card(Modifier.fillMaxWidth()) {
                     Row(Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
                         if (s.photoUrl != null) {
                             AsyncImage(
-                                model = base + s.photoUrl, contentDescription = "Sighting photo",
+                                model = base + s.photoUrl, contentDescription = null,
                                 modifier = Modifier.size(56.dp).clip(RoundedCornerShape(10.dp)),
                                 contentScale = ContentScale.Crop,
                             )
                             Spacer(Modifier.width(10.dp))
                         }
                         Column {
-                            Text(timeAgo(s.seenAt), style = MaterialTheme.typography.titleMedium)
-                            if (!s.direction.isNullOrBlank()) Text("Heading: " + s.direction)
+                            Text(timeAgoL(ctx, s.seenAt), style = MaterialTheme.typography.titleMedium)
+                            if (!s.direction.isNullOrBlank()) {
+                                val dir = if (s.direction == "Unknown") stringResource(R.string.sight_unknown) else s.direction
+                                Text(stringResource(R.string.detail_heading, dir))
+                            }
                             if (!s.notes.isNullOrBlank()) Text(s.notes)
                         }
                     }

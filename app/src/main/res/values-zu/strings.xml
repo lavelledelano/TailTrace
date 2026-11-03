@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_map">Imephu</string>
+    <string name="nav_cases">Amacala</string>
+    <string name="nav_settings">Izilungiselelo</string>
+
+    <string name="auth_tagline">Silandela umkhondo wesilwane ngasinye</string>
+    <string name="auth_name">Igama eliphelele</string>
+    <string name="auth_phone">Ifoni (akuphoqelekile)</string>
+    <string name="auth_email">I-imeyili</string>
+    <string name="auth_password">Iphasiwedi</string>
+    <string name="auth_toggle_password">Bonisa noma fihla iphasiwedi</string>
+    <string name="auth_sign_in">Ngena</string>
+    <string name="auth_create_account">Dala i-akhawunti</string>
+    <string name="auth_have_account">Usunayo i-akhawunti? Ngena</string>
+    <string name="auth_new_here">Umusha lapha? Dala i-akhawunti</string>
+    <string name="err_name">Sicela ufake igama lakho</string>
+    <string name="err_email">Faka ikheli le-imeyili elivumelekile</string>
+    <string name="err_password_required">Faka iphasiwedi yakho</string>
+    <string name="err_password_weak">Iphasiwedi idinga oluhlukile okungenani izinhlamvu ezi-8 ezinezinombolo</string>
+    <string name="err_phone">Faka inombolo yocingo evumelekile, isb. 0821234567</string>
+
+    <string name="settings_title">Izilungiselelo</string>
+    <string name="settings_profile">Iphrofayela</string>
+    <string name="settings_contact">Inombolo oyithandayo yokuxhumana</string>
+    <string name="settings_save">Londoloza iphrofayela</string>
+    <string name="settings_saving">Iyalondoloza...</string>
+    <string name="settings_saved">Iphrofayela ilondoloziwe</string>
+    <string name="settings_preferences">Okuthandayo</string>
+    <string name="settings_dark">Imodi emnyama</string>
+    <string name="settings_dark_sub">Ilula emehlweni ebusuku</string>
+    <string name="settings_alerts">Izaziso eziseduze</string>
+    <string name="settings_alerts_sub">Thola isaziso ngezilwane ezifuywayo ezilahlekile endaweni yakho</string>
+    <string name="settings_radius">Ububanzi bokusesha: %1$d km</string>
+    <string name="settings_language">Ulimi</string>
+    <string name="settings_account">I-akhawunti</string>
+    <string name="settings_password_note">Iphasiwedi yakho ayilondolozwa kule foni. Iseva igcina kuphela i-hash evikelekile yayo.</string>
+    <string name="settings_logout">Phuma</string>
+
+    <string name="cases_title">Amacala ezilwane ezilahlekile</string>
+    <string name="cases_sub">Siza umuntu ukuba abuyele ekhaya</string>
+    <string name="cases_search">Sesha ngegama noma uhlobo</string>
+    <string name="filter_all">Konke</string>
+    <string name="species_dog">Inja</string>
+    <string name="species_cat">Ikati</string>
+    <string name="species_other">Okunye</string>
+    <string name="cases_empty">Awekho amacala asebenzayo ngaphakathi kwama-%1$d km. Thumela elilodwa, noma ukhulise ububanzi bokusesha ezilungiselelweni.</string>
+    <string name="report_missing">Bika isilwane esilahlekile</string>
+    <string name="last_seen">Sibonwe okokugcina %1$s</string>
+    <string name="time_now">khona manje</string>
+    <string name="time_min">emizuzwini engu-%1$d edlule</string>
+    <string name="time_h">emahoreni angu-%1$d edlule</string>
+    <string name="time_d">ezinsukwini ezingu-%1$d ezedlule</string>
+    <string name="refresh">Vuselela</string>
+    <string name="back">Emuva</string>
+    <string name="map_count">Izilwane ezilahlekile ezingu-%1$d eduze</string>
+
+    <string name="create_title">Bika isilwane esilahlekile</string>
+    <string name="create_name">Igama lesilwane</string>
+    <string name="create_breed">Uhlobo noma ukubukeka</string>
+    <string name="create_color">Umbala namabhaluzi</string>
+    <string name="create_desc">Isiqu, amathegi, ubuntu, noma yini esizayo</string>
+    <string name="create_location">Indawo yokugcina lapho sibonwe khona</string>
+    <string name="create_location_sub">%1$s (indawo yakho ekhona)</string>
+    <string name="create_update">Vuselela</string>
+    <string name="create_post">Thumela isilwane esilahlekile</string>
+    <string name="create_posting">Iyathumela...</string>
+    <string name="err_photo">Sicela wengeze isithombe ukuze abantu bakwazi ukubona isilwane sakho</string>
+    <string name="err_required">Igama, uhlobo nombala kuyadingeka</string>
+    <string name="photo_take">Thatha isithombe</string>
+    <string name="photo_library">Umtapo</string>
+
+    <string name="status_label">Isimo: %1$s</string>
+    <string name="status_active">Siyasebenza</string>
+    <string name="status_paused">Kumiswe okwesikhashana</string>
+    <string name="status_reunited">Sihlangene kabusha</string>
+    <string name="status_closed">Sivaliwe</string>
+    <string name="detail_saw">Ngibone lesi silwane</string>
+    <string name="detail_call">Shayela %1$s</string>
+    <string name="detail_owner">umnikazi</string>
+    <string name="detail_update_status">Vuselela isimo secala</string>
+    <string name="detail_sightings">Okubonwe (%1$d)</string>
+    <string name="detail_none">Akukabikho okubonwe.</string>
+    <string name="detail_heading">Ubheke: %1$s</string>
+    <string name="detail_not_found">Icala alitholakalanga</string>
+
+    <string name="sight_title">Bika okubonwe</string>
+    <string name="sight_help">Siza %1$s ukuba abuyele ekhaya ngokuphepha</string>
+    <string name="sight_this_pet">lesi silwane</string>
+    <string name="sight_photo">Faka isithombe (akuphoqelekile)</string>
+    <string name="sight_location">Indawo lapho sibonwe khona</string>
+    <string name="sight_use_location">Sebenzisa indawo ekhona</string>
+    <string name="sight_direction">Isiqondiso esasibheke kuso</string>
+    <string name="sight_unknown">Akwaziwa</string>
+    <string name="sight_notice">Uqaphele ini?</string>
+    <string name="sight_safety">Sicela ubuke ukude ngokuphepha. Ungasixosha noma usivalele. Zivikele wena nesilwane.</string>
+    <string name="sight_share">Yabelana ngokubonwe</string>
+    <string name="sight_sharing">Iyabelana...</string>
+
+</resources>

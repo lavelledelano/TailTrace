@@ -31,6 +31,7 @@ import org.osmdroid.views.overlay.Marker
 import java.io.File
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.MapTileIndex
+import androidx.compose.ui.res.stringResource
 @Composable
 fun MapScreen(vm: AppViewModel, nav: NavController) {
     val ctx = LocalContext.current
@@ -96,7 +97,7 @@ fun MapScreen(vm: AppViewModel, nav: NavController) {
             shadowElevation = 4.dp,
         ) {
             Text(
-                vm.pets.size.toString() + " lost pets nearby",
+                stringResource(R.string.map_count, vm.pets.size),
                 modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
                 style = MaterialTheme.typography.titleMedium,
             )
@@ -105,7 +106,7 @@ fun MapScreen(vm: AppViewModel, nav: NavController) {
         ExtendedFloatingActionButton(
             onClick = { nav.navigate("create") },
             icon = { Icon(Icons.Default.Add, null) },
-            text = { Text("Report missing pet") },
+            text = { Text(stringResource(R.string.report_missing)) },
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary,
             modifier = Modifier.align(Alignment.TopEnd).padding(12.dp),

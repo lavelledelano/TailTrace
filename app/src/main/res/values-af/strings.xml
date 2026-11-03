@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_map">Kaart</string>
+    <string name="nav_cases">Gevalle</string>
+    <string name="nav_settings">Instellings</string>
+
+    <string name="auth_tagline">Volg elke pootspoor</string>
+    <string name="auth_name">Volle naam</string>
+    <string name="auth_phone">Foon (opsioneel)</string>
+    <string name="auth_email">E-pos</string>
+    <string name="auth_password">Wagwoord</string>
+    <string name="auth_toggle_password">Wys of versteek wagwoord</string>
+    <string name="auth_sign_in">Teken in</string>
+    <string name="auth_create_account">Skep rekening</string>
+    <string name="auth_have_account">Het reeds \'n rekening? Teken in</string>
+    <string name="auth_new_here">Nuut hier? Skep \'n rekening</string>
+    <string name="err_name">Voer asseblief jou naam in</string>
+    <string name="err_email">Voer \'n geldige e-posadres in</string>
+    <string name="err_password_required">Voer jou wagwoord in</string>
+    <string name="err_password_weak">Wagwoord moet 8+ karakters met letters en syfers hê</string>
+    <string name="err_phone">Voer \'n geldige foonnommer in, bv. 0821234567</string>
+
+    <string name="settings_title">Instellings</string>
+    <string name="settings_profile">Profiel</string>
+    <string name="settings_contact">Verkose kontaknommer</string>
+    <string name="settings_save">Stoor profiel</string>
+    <string name="settings_saving">Stoor tans...</string>
+    <string name="settings_saved">Profiel gestoor</string>
+    <string name="settings_preferences">Voorkeure</string>
+    <string name="settings_dark">Donker modus</string>
+    <string name="settings_dark_sub">Makliker vir die oë in die nag</string>
+    <string name="settings_alerts">Kennisgewings in die omgewing</string>
+    <string name="settings_alerts_sub">Kry kennis van nuwe vermiste troeteldiere in jou area</string>
+    <string name="settings_radius">Soekradius: %1$d km</string>
+    <string name="settings_language">Taal</string>
+    <string name="settings_account">Rekening</string>
+    <string name="settings_password_note">Jou wagwoord word nooit op hierdie foon gestoor nie. Die bediener hou slegs \'n veilige hash daarvan.</string>
+    <string name="settings_logout">Teken uit</string>
+
+    <string name="cases_title">Vermiste troeteldier-gevalle</string>
+    <string name="cases_sub">Help iemand huis toe kom</string>
+    <string name="cases_search">Soek volgens naam of ras</string>
+    <string name="filter_all">Almal</string>
+    <string name="species_dog">Hond</string>
+    <string name="species_cat">Kat</string>
+    <string name="species_other">Ander</string>
+    <string name="cases_empty">Geen aktiewe gevalle binne %1$d km nie. Plaas een, of vergroot jou soekradius in Instellings.</string>
+    <string name="report_missing">Rapporteer vermiste troeteldier</string>
+    <string name="last_seen">Laas gesien %1$s</string>
+    <string name="time_now">sopas</string>
+    <string name="time_min">%1$d min gelede</string>
+    <string name="time_h">%1$d u gelede</string>
+    <string name="time_d">%1$d d gelede</string>
+    <string name="refresh">Verfris</string>
+    <string name="back">Terug</string>
+    <string name="map_count">%1$d vermiste troeteldiere naby</string>
+
+    <string name="create_title">Rapporteer \'n vermiste troeteldier</string>
+    <string name="create_name">Troeteldier se naam</string>
+    <string name="create_breed">Ras of voorkoms</string>
+    <string name="create_color">Kleur en merke</string>
+    <string name="create_desc">Halsband, etikette, geaardheid, enigiets wat help</string>
+    <string name="create_location">Laaste gesien-ligging</string>
+    <string name="create_location_sub">%1$s (jou huidige ligging)</string>
+    <string name="create_update">Opdateer</string>
+    <string name="create_post">Plaas vermiste troeteldier</string>
+    <string name="create_posting">Plaas tans...</string>
+    <string name="err_photo">Voeg asseblief \'n foto by sodat mense jou troeteldier kan herken</string>
+    <string name="err_required">Naam, ras en kleur is verpligtend</string>
+    <string name="photo_take">Neem foto</string>
+    <string name="photo_library">Biblioteek</string>
+
+    <string name="status_label">Status: %1$s</string>
+    <string name="status_active">Aktief</string>
+    <string name="status_paused">Onderbreek</string>
+    <string name="status_reunited">Herenig</string>
+    <string name="status_closed">Gesluit</string>
+    <string name="detail_saw">Ek het hierdie troeteldier gesien</string>
+    <string name="detail_call">Bel %1$s</string>
+    <string name="detail_owner">eienaar</string>
+    <string name="detail_update_status">Dateer gevalstatus op</string>
+    <string name="detail_sightings">Waarnemings (%1$d)</string>
+    <string name="detail_none">Nog geen waarnemings nie.</string>
+    <string name="detail_heading">Rigting: %1$s</string>
+    <string name="detail_not_found">Geval nie gevind nie</string>
+
+    <string name="sight_title">Rapporteer \'n waarneming</string>
+    <string name="sight_help">Help %1$s veilig huis toe kom</string>
+    <string name="sight_this_pet">hierdie troeteldier</string>
+    <string name="sight_photo">Voeg \'n foto by (opsioneel)</string>
+    <string name="sight_location">Waarnemingsligging</string>
+    <string name="sight_use_location">Gebruik huidige ligging</string>
+    <string name="sight_direction">Rigting waarin dit beweeg het</string>
+    <string name="sight_unknown">Onbekend</string>
+    <string name="sight_notice">Wat het jy opgemerk?</string>
+    <string name="sight_safety">Hou asseblief van \'n veilige afstand dop. Moenie die dier jag of vaskeer nie. Hou jouself en die troeteldier veilig.</string>
+    <string name="sight_share">Deel waarneming</string>
+    <string name="sight_sharing">Deel tans...</string>
+
+</resources>

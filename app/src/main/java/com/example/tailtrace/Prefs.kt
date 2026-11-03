@@ -20,6 +20,7 @@ data class Settings(
     val dark: Boolean = false,
     val notify: Boolean = true,
     val radius: Int = 10,
+    val lang: String = "en",
 )
 
 class Prefs(private val ctx: Context) {
@@ -31,10 +32,12 @@ class Prefs(private val ctx: Context) {
         val DARK = booleanPreferencesKey("dark")
         val NOTIFY = booleanPreferencesKey("notify")
         val RADIUS = intPreferencesKey("radius")
+
+        val LANG = stringPreferencesKey("lang")
     }
 
     val settings: Flow<Settings> = ctx.store.data.map { p ->
-        Settings(p[TOKEN], p[USER_ID], p[NAME] ?: "", p[PHONE] ?: "", p[DARK] ?: false, p[NOTIFY] ?: true, p[RADIUS] ?: 10)
+        Settings(p[TOKEN], p[USER_ID], p[NAME] ?: "", p[PHONE] ?: "", p[DARK] ?: false, p[NOTIFY] ?: true, p[RADIUS] ?: 10, p[LANG] ?: "en")
     }
 
     suspend fun <T> set(key: Preferences.Key<T>, value: T) {

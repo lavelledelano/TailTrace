@@ -13,6 +13,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -25,6 +27,7 @@ fun AuthScreen(
     onLogin: (email: String, password: String) -> Unit,
     onRegister: (name: String, email: String, password: String, phone: String) -> Unit,
 ) {
+    val ctx = LocalContext.current
     var isRegister by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -35,11 +38,11 @@ fun AuthScreen(
 
     fun submit() {
         formError = when {
-            isRegister && name.isBlank() -> "Please enter your name"
-            !Validator.isValidEmail(email) -> "Enter a valid email address"
-            password.isBlank() -> "Enter your password"
-            isRegister && !Validator.isStrongPassword(password) -> "Password needs 8+ characters with letters and numbers"
-            isRegister && !Validator.isValidPhone(phone) -> "Enter a valid phone number, e.g. 0821234567"
+            isRegister && name.isBlank() -> ctx.getString(R.string.err_name)
+            !Validator.isValidEmail(email) -> ctx.getString(R.string.err_email)
+            password.isBlank() -> ctx.getString(R.string.err_password_required)
+            isRegister && !Validator.isStrongPassword(password) -> ctx.getString(R.string.err_password_weak)
+            isRegister && !Validator.isValidPhone(phone) -> ctx.getString(R.string.err_phone)
             else -> null
         }
         if (formError != null) return
@@ -54,34 +57,34 @@ fun AuthScreen(
     ) {
         Icon(Icons.Default.Pets, null, Modifier.size(72.dp), tint = MaterialTheme.colorScheme.primary)
         Text("TailTrace", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onBackground)
-        Text("Tracking every pawprint", color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.auth_tagline), color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(12.dp))
 
         if (isRegister) {
             OutlinedTextField(
-                name, { name = it }, label = { Text("Full name") }, singleLine = true,
+                name, { name = it }, label = { Text(stringResource(R.string.auth_name)) }, singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
             OutlinedTextField(
-                phone, { phone = it }, label = { Text("Phone (optional)") }, singleLine = true,
+                phone, { phone = it }, label = { Text(stringResource(R.string.auth_phone)) }, singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 modifier = Modifier.fillMaxWidth(),
             )
         }
         OutlinedTextField(
-            email, { email = it }, label = { Text("Email") }, singleLine = true,
+            email, { email = it }, label = { Text(stringResource(R.string.auth_email)) }, singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth(),
         )
         OutlinedTextField(
-            password, { password = it }, label = { Text("Password") }, singleLine = true,
+            password, { password = it }, label = { Text(stringResource(R.string.auth_password)) }, singleLine = true,
             visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
                 IconButton(onClick = { showPassword = !showPassword }) {
                     Icon(
                         if (showPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                        "Show or hide password",
+                        stringResource(R.string.auth_toggle_password),
                     )
                 }
             },
@@ -95,10 +98,10 @@ fun AuthScreen(
             modifier = Modifier.fillMaxWidth().height(52.dp),
         ) {
             if (loading) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp, color = Color.White)
-            else Text(if (isRegister) "Create account" else "Sign in")
+            else Text(stringResource(if (isRegister) R.string.auth_create_account else R.string.auth_sign_in))
         }
         TextButton(onClick = { isRegister = !isRegister; formError = null }) {
-            Text(if (isRegister) "Already have an account? Sign in" else "New here? Create an account")
+            Text(stringResource(if (isRegister) R.string.auth_have_account else R.string.auth_new_here))
         }
     }
 }
