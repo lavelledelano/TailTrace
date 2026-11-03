@@ -62,7 +62,7 @@ fun MainScaffold(vm: AppViewModel) {
         },
     ) { pad ->
         NavHost(nav, startDestination = "map", modifier = Modifier.padding(pad)) {
-            composable("map") { Placeholder("Map (coming soon)") }
+            composable("map") { MapScreen(vm, nav) }
             composable("cases") { CasesScreen(vm, nav) }
             composable("create") { CreateCaseScreen(vm, nav) }
             composable("detail/{id}") { DetailScreen(vm, nav, it.arguments!!.getString("id")!!) }
