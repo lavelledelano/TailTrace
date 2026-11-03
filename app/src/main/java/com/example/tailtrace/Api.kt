@@ -27,7 +27,7 @@ interface TailTraceApi {
 }
 
 object ApiClient {
-    const val BASE_URL = "https://tailtrace-production.up.railway.app/"
+    const val BASE_URL = "https://tail-trace-pied.vercel.app/"
 
     @Volatile var token: String? = null
 

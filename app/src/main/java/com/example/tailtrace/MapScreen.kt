@@ -29,7 +29,8 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import java.io.File
-
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
+import org.osmdroid.util.MapTileIndex
 @Composable
 fun MapScreen(vm: AppViewModel, nav: NavController) {
     val ctx = LocalContext.current
@@ -37,14 +38,27 @@ fun MapScreen(vm: AppViewModel, nav: NavController) {
         val cfg = Configuration.getInstance()
         cfg.load(ctx, ctx.getSharedPreferences("osm", Context.MODE_PRIVATE))
         cfg.userAgentValue = "TailTrace-StudentProject/1.0 (github.com/lavelledelano/TailTrace)"
-        cfg.osmdroidBasePath = File(ctx.cacheDir, "osmdroid_v3")
-        cfg.osmdroidTileCache = File(ctx.cacheDir, "osmdroid_v3/tiles")
+        cfg.osmdroidBasePath = File(ctx.cacheDir, "osmdroid_v4")
+        cfg.osmdroidTileCache = File(ctx.cacheDir, "osmdroid_v4/tiles")
         true
     }
     var preview by remember { mutableStateOf<Pet?>(null) }
     val mapView = remember {
         MapView(ctx).apply {
-            setTileSource(TileSourceFactory.MAPNIK)
+            setTileSource(
+                object : OnlineTileSourceBase(
+                    "EsriStreet", 0, 19, 256, "",
+                    arrayOf("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/"),
+                    "Tiles © Esri",
+                ) {
+                    override fun getTileURLString(pMapTileIndex: Long): String {
+                        return baseUrl +
+                                MapTileIndex.getZoom(pMapTileIndex) + "/" +
+                                MapTileIndex.getY(pMapTileIndex) + "/" +
+                                MapTileIndex.getX(pMapTileIndex)
+                    }
+                }
+            )
             setMultiTouchControls(true)
             controller.setZoom(14.0)
         }
