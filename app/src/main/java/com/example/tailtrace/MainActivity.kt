@@ -26,23 +26,6 @@ import androidx.compose.foundation.verticalScroll
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val prefs = getSharedPreferences("crash", MODE_PRIVATE)
-        Thread.setDefaultUncaughtExceptionHandler { _, e ->
-            prefs.edit().putString("trace", e.stackTraceToString()).commit()
-            android.os.Process.killProcess(android.os.Process.myPid())
-            kotlin.system.exitProcess(10)
-        }
-        val trace = prefs.getString("trace", null)
-        if (trace != null) {
-            prefs.edit().remove("trace").apply()
-            setContent {
-                Text(
-                    trace.take(2500),
-                    modifier = Modifier.verticalScroll(rememberScrollState()).padding(16.dp),
-                )
-            }
-            return
-        }
         setContent { TailTraceApp() }
     }
 }
