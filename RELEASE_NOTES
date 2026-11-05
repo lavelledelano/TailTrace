@@ -1,0 +1,30 @@
+# TailTrace Release Notes
+
+## Version 2.0 (current)
+Updates since the prototype (v1.0).
+
+### New features
+- **Live map on the home screen.** The Map tab shows an OpenStreetMap map with a pin for every active missing-pet case near you. Tap a pin for a preview card, then open the full case. *(Replaces the "coming soon" placeholder in v1.0.)*
+- **Multi-language support.** The whole app is available in English, Afrikaans and isiZulu. The language is chosen in Settings, changes instantly with no restart, and is remembered.
+- **Offline mode with sync.** Nearby cases are saved in a local SQLite database, so they can still be read without internet. Missing-pet reports and sightings created while offline are queued, and uploaded automatically when the phone reconnects, or by tapping **Sync now**. A banner shows the offline state and how many items are waiting.
+
+### Innovative features from our design, and where they stand
+- **Sightings as evidence, not social posts:** included since v1.0 and used throughout this version. Every sighting is structured: photo, location, direction, notes.
+- **Safe Sighting Mode:** included since v1.0. The sighting screen tells people to observe from a safe distance and not to chase or corner the animal.
+- **Live pawprint recovery map:** the map is added in this version, with pins for all active cases. Movement trails and urgency colours are not done yet.
+- **Not included in this version:** automatic movement and search-radius updates, and neighbourhood relay alerts (push notifications).
+
+### Improvements and fixes
+- The API now runs on **Vercel**, because the previous host's free trial ended. The database stays on MongoDB Atlas.
+- The settings screen now includes a language picker, and the profile editor saves to the server.
+- Fixed map tile loading by switching tile provider.
+- Fixed a crash on startup caused by the language switcher interfering with permission and photo screens.
+- Added a unit test and CI checks for the API.
+
+### Known issues
+- Single sign-on was not implemented.
+- Push notifications were not implemented.
+- Pet photos may not display offline.
+
+## Version 1.0 (prototype)
+Login and registration with hashed passwords, REST API, report a missing pet, browse and view cases, report a sighting, case status controls, and settings (profile, dark mode, search radius).
