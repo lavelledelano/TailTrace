@@ -97,4 +97,9 @@
     <string name="sight_share">Yabelana ngokubonwe</string>
     <string name="sight_sharing">Iyabelana...</string>
 
+
+    <string name="offline_banner">Awuxhumekile ku-inthanethi. Kuboniswa amacala alondoloziwe.</string>
+    <string name="pending_banner">%1$d kulinde ukuvumelanisa</string>
+    <string name="sync_now">Vumelanisa manje</string>
+
 </resources>

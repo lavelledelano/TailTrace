@@ -1,16 +1,11 @@
-
-
 package com.example.tailtrace
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -20,14 +15,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.compose.ui.res.stringResource
+
 @Composable
 fun MainScaffold(vm: AppViewModel) {
     val nav = rememberNavController()
@@ -36,6 +30,7 @@ fun MainScaffold(vm: AppViewModel) {
 
     val requestLocation = rememberLocationRequester { la, ln -> vm.setLocation(la, ln) }
     LaunchedEffect(Unit) { requestLocation() }
+    LaunchedEffect(Unit) { vm.syncNow() }
     LaunchedEffect(vm.lat, vm.lng, settings?.radius) { vm.loadNearby() }
 
     val tabs = listOf(
@@ -61,25 +56,16 @@ fun MainScaffold(vm: AppViewModel) {
             }
         },
     ) { pad ->
-        NavHost(nav, startDestination = "map", modifier = Modifier.padding(pad)) {
-            composable("map") { MapScreen(vm, nav) }
-            composable("cases") { CasesScreen(vm, nav) }
-            composable("create") { CreateCaseScreen(vm, nav) }
-            composable("detail/{id}") { DetailScreen(vm, nav, it.arguments!!.getString("id")!!) }
-            composable("sighting/{id}") { SightingScreen(vm, nav, it.arguments!!.getString("id")!!) }
-            composable("settings") { SettingsScreen(vm) }
+        Column(Modifier.padding(pad)) {
+            SyncBanner(vm)
+            NavHost(nav, startDestination = "map", modifier = Modifier.weight(1f)) {
+                composable("map") { MapScreen(vm, nav) }
+                composable("cases") { CasesScreen(vm, nav) }
+                composable("create") { CreateCaseScreen(vm, nav) }
+                composable("detail/{id}") { DetailScreen(vm, nav, it.arguments!!.getString("id")!!) }
+                composable("sighting/{id}") { SightingScreen(vm, nav, it.arguments!!.getString("id")!!) }
+                composable("settings") { SettingsScreen(vm) }
+            }
         }
-    }
-}
-
-@Composable
-fun Placeholder(title: String, extra: @Composable () -> Unit = {}) {
-    Column(
-        Modifier.fillMaxSize().padding(24.dp),
-        Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        Alignment.CenterHorizontally,
-    ) {
-        Text(title, style = MaterialTheme.typography.titleLarge)
-        extra()
     }
 }

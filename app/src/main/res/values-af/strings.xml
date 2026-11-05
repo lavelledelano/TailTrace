@@ -97,4 +97,8 @@
     <string name="sight_share">Deel waarneming</string>
     <string name="sight_sharing">Deel tans...</string>
 
+    <string name="offline_banner">Jy is vanlyn. Wys gestoorde gevalle.</string>
+    <string name="pending_banner">%1$d wag om te sinkroniseer</string>
+    <string name="sync_now">Sinkroniseer nou</string>
+
 </resources>

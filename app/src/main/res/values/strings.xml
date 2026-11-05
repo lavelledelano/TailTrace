@@ -100,5 +100,9 @@
     <string name="sight_share">Share sighting</string>
     <string name="sight_sharing">Sharing...</string>
 
+    <string name="offline_banner">You\'re offline. Showing saved cases.</string>
+    <string name="pending_banner">%1$d waiting to sync</string>
+    <string name="sync_now">Sync now</string>
+
 </resources>
 
