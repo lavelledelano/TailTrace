@@ -1,145 +1,82 @@
 # TailTrace: Tracking Every Pawprint 🐾
 
-A community Android application for reporting and finding lost pets, developed as part of the OPSC6312 Part 2 group project.
+A community app for reporting and finding lost pets. Built for OPSC6312.
 
-## Team Members
+Team: Lavelle Dalman (ST10290032), Eden Gwenda (ST10452860)
 
-- **Lavelle Dalman** | ST10290032
-- **Eden Gwenda** | ST10452860
+🎥 Demo video:https://youtu.be/l2bxWR-t36g?si=5SVJ2hyRcm_beJqo
+📦 Latest release and APK: https://github.com/lavelledelano/TailTrace/releases
+📝 Release notes: [RELEASE_NOTES.md](RELEASE_NOTES.md)
 
 ## Purpose
-
-TailTrace is a community application designed to help pet owners and community members report, locate and share information about missing pets.
-
-Pet owners can create missing-pet cases by providing information such as photographs, breed, colour, description and last-seen location. Community members can browse nearby missing-pet cases, view case details and submit sighting reports to assist with locating missing pets.
-
-## Video Demonstration Video Link:
-https://youtube.com/shorts/Iql9AnZHzLQ?si=FIp0DI4iWbnE1V6l 
+Losing a pet is stressful, and information about lost pets is scattered across social media posts and
+paper flyers. TailTrace gives owners, neighbours and the community one place to report missing pets,
+see them on a map, and submit structured sightings that help reunite pets with their owners.
 
 ## Features
+- **Sign in and register:** passwords are hashed with bcrypt on the server and never stored on the phone. Sessions use a JWT token.
+- **Report a missing pet:** photo, species, breed, colour, description and last-seen location.
+- **Browse and search cases:** searchable, filterable list of active cases within a chosen radius.
+- **Live map:** OpenStreetMap-based map with a pin for every active case, and a preview card when you tap a pin.
+- **Case details:** photos, description, call-the-owner button, and owner status controls (Active, Paused, Reunited, Closed).
+- **Report a sighting:** photo, location, direction of travel, notes, and a safety reminder.
+- **Settings:** edit profile (synced to the server), dark mode, alerts preference, search radius, language, log out.
+- **Multi-language:** English, Afrikaans and isiZulu, switchable instantly in Settings.
+- **Offline mode with sync:** cases are saved on the phone for reading offline, and anything posted offline is queued and uploaded automatically when the phone reconnects.
 
-### 1. Report a Missing Pet
+## Innovative features
+| Feature from our design | Status in this version |
+|---|---|
+| Sightings as evidence, not social posts | Implemented: every sighting has a photo, location, time, direction and notes |
+| Safe Sighting Mode | Implemented: a safety reminder on the sighting screen (observe from a distance, do not chase) |
+| Live pawprint recovery map | Partly implemented: live map with pins for active cases and tap-to-preview |
+| Automatic movement and search-radius updates | Not yet implemented (future work) |
+| Neighbourhood relay alerts (push notifications) | Not yet implemented (future work) |
 
-Users can report a missing pet by providing:
+## Tech stack
+Kotlin, Jetpack Compose, Retrofit, DataStore, SQLite, Coil, osmdroid ·
+Node.js, Express, MongoDB Atlas, Vercel.
 
-- Photo
-- Breed
-- Colour
-- Description
-- Last-seen location
+## Architecture
+The Android app talks to a REST API over HTTPS. The API is hosted on Vercel and stores data in MongoDB Atlas.
+Offline data is kept in a local SQLite database on the phone.
 
-### 2. Browse and View Missing-Pet Cases
-
-Users can browse active missing-pet cases using a searchable and filterable list. Users can view full case details, use the call-owner function and manage the status of cases where applicable.
-
-Available case statuses include:
-
-- Active
-- Paused
-- Reunited
-- Closed
-
-### 3. Report a Sighting
-
-Community members can submit a sighting report containing:
-
-- Photo
-- Location
-- Direction
-- Notes
-- Safety reminder
-
-### 4. Sign In and Register
-
-Users can create an account and sign in to the application. Passwords are hashed using bcrypt on the server, while authenticated sessions use a JWT token.
-
-### 5. Settings
-
-Users can manage application settings, including:
-
-- Edit profile
-- Dark mode
-- Alerts preference
-- Search radius
-- Log out
-
-## Design Considerations
-
-The design of TailTrace focuses on providing a simple and user-friendly way for community members to report and locate missing pets.
-
-The application provides separate functionality for reporting missing pets, browsing existing cases and submitting sightings. Information such as photographs, descriptions and locations is included to help users identify missing pets.
-
-Input and authentication functionality are handled through the Android application and REST API. The application also provides settings that allow users to manage their profile and preferences.
-
-Security was considered during the design by ensuring that passwords are not stored in plain text and that authenticated sessions use JWT tokens. The backend uses bcrypt password hashing to protect stored passwords.
-
-The application also uses a REST API connected to MongoDB Atlas so that information can be stored and accessed between the Android application and backend.
-
-## Technology Stack
-
-### Android Application
-
-- Kotlin
-- Jetpack Compose
-- Retrofit
-- DataStore
-- Coil
-
-### Backend
-
-- Node.js
-- Express.js
-- MongoDB Atlas
-- Railway
-- JWT authentication
-- bcrypt password hashing
-
-## REST API
-
-The Android application communicates with the backend through a REST API.
-
-**Base URL:** https://tailtrace-production.up.railway.app/
+**Live API:** https://tail-trace-pied.vercel.app
 
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/auth/register` | Create account |
-| POST | `/api/auth/login` | Sign in and return JWT |
-| PUT | `/api/users/me` | Update profile |
-| POST | `/api/pets` | Create missing-pet case |
-| GET | `/api/pets/nearby` | Retrieve active cases within a radius |
-| GET | `/api/pets/:id` | Retrieve case details |
-| PATCH | `/api/pets/:id/status` | Allow owner to update case status |
-| POST | `/api/sightings` | Submit a sighting |
-| GET | `/api/pets/:id/sightings` | Retrieve sightings for a case |
-
-## Database
-
-TailTrace uses **MongoDB Atlas** as the backend database. The REST API communicates with the database to store and retrieve application information, including user accounts, missing-pet cases and sighting reports.
-
-The backend is deployed using **Railway**.
+| POST | /api/auth/register | Create account |
+| POST | /api/auth/login | Sign in, returns JWT |
+| PUT | /api/users/me | Update profile |
+| POST | /api/pets | Create missing-pet case |
+| GET | /api/pets/nearby | Active cases within a radius |
+| GET | /api/pets/:id | Case details |
+| PATCH | /api/pets/:id/status | Owner updates status |
+| POST | /api/sightings | Submit a sighting |
+| GET | /api/pets/:id/sightings | Sightings for a case |
 
 ## Security
+Passwords are never stored in plain text. The server stores only a bcrypt hash, and the app stores only a
+session token. All traffic uses HTTPS.
 
-Security was considered as part of the authentication implementation.
+## Run the app
+1. Clone the repo and open the root folder in Android Studio.
+2. Make sure `BASE_URL` in `Api.kt` is the live API address above.
+3. Run on an emulator or a phone (Android 8.0 / API 26 or higher), or install the APK from the Releases page.
 
-- Passwords are never stored in plain text.
-- The server stores passwords using bcrypt hashing.
-- The Android application stores a session token rather than the user's password.
-- JWT authentication is used to maintain authenticated sessions.
+## Run the API locally
+    cd api
+    npm install
+    # create a .env file with MONGODB_URI and JWT_SECRET
+    npm start
 
-## Run the App
+## Tests and CI
+- API tests: `cd api` then `npm test`
+- Android unit tests: `./gradlew testDebugUnitTest`
+- Both run automatically on every push with GitHub Actions (see the Actions tab).
 
-1. Clone the repository and open the root folder in Android Studio.
-2. Set `BASE_URL` in `Api.kt` to the live API address shown above.
-3. Run the application on an Android emulator or physical Android device.
-
-The application supports **Android 8.0 / API 26 and higher**.
-
-## Run the API Locally
-
-The backend API is located in the `api` folder.
-
-```bash
-cd api
-npm install
-npm start
+## Known limitations and future work
+- Single sign-on and push notifications were not completed in this version.
+- Pet photos are not shown offline unless they were cached earlier.
+- A pet posted offline appears in the list only after it syncs.
+- The free hosting plan can be slow on the first request after a quiet period.
